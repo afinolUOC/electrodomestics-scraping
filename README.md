@@ -1,1 +1,2 @@
 # electrodomestics-scraping
+TO DO
