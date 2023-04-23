@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import seleniumScript
+from datetime import date
 
 
 # la funció download permet accedir a les url i ens retorna el codi html
@@ -25,6 +26,7 @@ def crawl_sitemap(url):
 
 def product_scrapper_v2(url, section):
     verified = "https://static.electrocosto.com/images/icons/verified.svg"
+    today = date.today()
 
     def url_blacklist(url):
         html = download(url + "robots.txt")
@@ -60,6 +62,7 @@ def product_scrapper_v2(url, section):
         setup_dict["val-quantity"] = []
         setup_dict["stock"] = []
         setup_dict["product-sending-value"] = []
+        data_dict["date"] = []
         # fem que busqui totes les característiques de decripció del prod i que les afegeixi al dict
         for item in urllist:
             html = download(item)
@@ -90,6 +93,7 @@ def product_scrapper_v2(url, section):
                 data_dict["stock"].append("No Disponible")
             data_dict["product-sending-value"].append(soup.find(class_="sending-price-wrapper").find(
                 class_="product-sending-value").string)
+            data_dict["date"] = today
             # per la resta de característiques hem d'anar vigilant que tinguin el nombre d'elements adequats
             # ja que de forma normal si l'element no apareix al html de la web no s'afegirà al dict
             for atr in soup.find_all(class_="product-table-atributes"):
