@@ -55,6 +55,7 @@ def product_scrapper_v2(url, section):
         # preparem les keys comunes del dict
         setup_dict = dict()
         setup_dict["product-name"] = []
+        setup_dict["product-type"] = []
         setup_dict["price"] = []
         setup_dict["ref"] = []
         setup_dict["marca"] = []
@@ -82,6 +83,7 @@ def product_scrapper_v2(url, section):
             html = download(url)
             soup = BeautifulSoup(html, features="html.parser")
             data_dict["product-name"].append(soup.find(class_="product-name").string)
+            data_dict["product-type"].append(section)
             data_dict["price"].append(soup.find(class_="iva-included").span.string)
             data_dict["ref"].append(soup.find(class_="reference").span.string)
             data_dict["marca"].append(soup.find(class_="productPagePrices").a["title"])
