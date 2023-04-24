@@ -1,6 +1,7 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 
 
 def scroll_to(driver, scroll_element, t=2):
@@ -15,12 +16,14 @@ def click_button(driver, btn_element, t=2):
     time.sleep(t)
 
 
-def expand_section(section, t=4):
+def expand_section(section, firefox_path, t=4):
     # Expands a section from: ("https://www.electrocosto.com/" + section) to show all products in this section
     url = "https://www.electrocosto.com/" + section
 
     # Starting selenium webdriver
-    driver = webdriver.Firefox()
+    options = Options()
+    options.binary_location = firefox_path # path for the executable for firefox in your PC
+    driver = webdriver.Firefox(options=options)
     driver.get(url)
     time.sleep(t)
 
@@ -44,13 +47,15 @@ def expand_section(section, t=4):
 
     # Start scrolling loop until limit was reach
     while not_increase_count < scroll_limit:
-        scroll_to(driver, w_100_element)
+        scroll_to(driver, w_100_element, t=1)
         new_n_items = len(driver.find_elements(By.CLASS_NAME, 'recomender-block-item'))
-        print(new_n_items)
         if n_items == new_n_items:
             not_increase_count += 1
         else:
             not_increase_count = 0
             n_items = new_n_items
+    print(f"Section expanded correctly. \nTotal items found: {new_n_items}")
+    html = driver.page_source
+    driver.close()
 
-    return driver.page_source
+    return html
