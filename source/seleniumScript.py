@@ -54,6 +54,3 @@ def expand_section(section, t=4):
             n_items = new_n_items
 
     return driver.page_source
-
-if __name__ == "__main__":
-    expand_section('frigorificos')
