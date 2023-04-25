@@ -25,6 +25,7 @@ def crawl_sitemap(url):
 
 
 def product_scrapper_v2(url, section_list, path=r'C:\Program Files\Mozilla Firefox\firefox.exe'):
+    # imatge que es fa servir quan hi ha stock de producte
     verified = "https://static.electrocosto.com/images/icons/verified.svg"
     today = date.today()
 
@@ -34,6 +35,7 @@ def product_scrapper_v2(url, section_list, path=r'C:\Program Files\Mozilla Firef
         return banned_links
 
     def get_urls(url, section_list, path=r'C:\Program Files\Mozilla Firefox\firefox.exe'):
+        # cal que per cada secció carreguem tota la pàgina web amb el script de Selenium
         print("Loading content")
         links = dict()
         for section in section_list:
@@ -45,6 +47,7 @@ def product_scrapper_v2(url, section_list, path=r'C:\Program Files\Mozilla Firef
         return links
 
     def check_disallowed(url_list, disallow):
+        # comprovem que cap de les url està prohibida per robots.txt
         print("Checking for disallowed urls")
         disallow_pattern = '|'.join(disallow)
         for item in url_list.keys():
@@ -76,6 +79,7 @@ def product_scrapper_v2(url, section_list, path=r'C:\Program Files\Mozilla Firef
             # les característiques generals apareixen a totes les URL, i les predefinim
             html = download(url)
             soup = BeautifulSoup(html, features="html.parser")
+            # fem try si dona error en la lectura simplement s'omplirà com a valor nul
             try:
                 data_dict["product-name"].append(soup.find(class_="product-name").string)
             except:
@@ -133,7 +137,7 @@ def product_scrapper_v2(url, section_list, path=r'C:\Program Files\Mozilla Firef
                         data_dict[key].append("NULL")
                     data_dict[key].append(value)
             count += 1
-            # time.sleep(0.5)
+            time.sleep(0.5) # donem un temps entre les requests
 
         # fem un ultim repas de que tots els elements tinguin la llargada que toca
         for key in data_dict.keys():
