@@ -1,1 +1,0 @@
-llista_categories = ["lavadoras", "microondas", "lavavajillas", "moviles", "televisores", "portatiles", "calentadores", "secadoras", "campanas", "congeladores", "encimeras", "termos-electricos", "monitores", "tablets", "batidoras aspiradoras", "robot-de-cocina", "maquinas-de-cafe", "cocinas", "calefaccion", "ventiladores", "aires", "climatizadores"]
