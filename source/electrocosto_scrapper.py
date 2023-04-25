@@ -15,16 +15,7 @@ def download(url):
     return html
 
 
-# petit bot que retorna els links del sitemap
-def crawl_sitemap(url):
-    sitemap = download(url)
-    links = re.findall('<loc>(.*?)</loc>', sitemap)
-    for link in links:
-
-        print(link)
-
-
-def product_scrapper_v2(url, section_list, path=r'C:\Program Files\Mozilla Firefox\firefox.exe'):
+def product_scrapper(url, section_list, path=r'C:\Program Files\Mozilla Firefox\firefox.exe'):
     # imatge que es fa servir quan hi ha stock de producte
     verified = "https://static.electrocosto.com/images/icons/verified.svg"
     today = date.today()
@@ -156,7 +147,7 @@ def product_scrapper_v2(url, section_list, path=r'C:\Program Files\Mozilla Firef
 
 llista_categories = ["lavadoras", "microondas", "lavavajillas", "moviles", "televisores", "portatiles", "calentadores"]
 
-electrodomestics = product_scrapper_v2("https://www.electrocosto.com", llista_categories)
+electrodomestics = product_scrapper("https://www.electrocosto.com", llista_categories)
 
 electrodomestics_data = pd.DataFrame.from_dict(electrodomestics)
 electrodomestics_data.to_csv("electrodomestics.csv", index=False)
